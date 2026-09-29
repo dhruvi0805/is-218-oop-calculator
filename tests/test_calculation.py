@@ -14,6 +14,20 @@ def test_Subtract():
     assert subtract.a == 10
     assert subtract.b == 3
 
+def test_Subtract_negative():
+    subtract = Subtract(5, -10)
+    result = subtract.get_result()
+    assert result == 15
+    assert subtract.a == 5
+    assert subtract.b == -10
+
+def test_Subtract_zero():
+    subtract = Subtract(0, 5)
+    result = subtract.get_result()
+    assert result == -5
+    assert subtract.a == 0
+    assert subtract.b == 5
+
 def test_Multiply():
     multiply = Multiply(4, 6)
     result = multiply.get_result()
