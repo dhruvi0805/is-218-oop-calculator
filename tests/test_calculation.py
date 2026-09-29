@@ -41,3 +41,15 @@ def test_Divide():
     assert result == 6
     assert divide.a == 30 
     assert divide.b == 5
+
+def test_polymorphism():
+    operations = [
+        Add(10, 5),
+        Subtract(10, 3),
+        Multiply(4, 6),
+        Divide(30, 5)
+    ]
+    results = []
+    for calculation in operations:
+        results.append(calculation.get_result())
+    assert results == [15, 7, 24, 6]
