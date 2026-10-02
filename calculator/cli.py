@@ -39,7 +39,7 @@ def run():
             history.add(operation)
 
             result = operation.get_result()
-            print(f"Result: {result}")
+            print(f"Result: {result:g}")
 
 def describe(calculation):
     return f"{calculation.get_result():g}"
