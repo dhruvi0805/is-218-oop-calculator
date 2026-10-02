@@ -1,6 +1,7 @@
 import pytest
 
 from calculator.calculation import Add, Subtract, Multiply, Divide
+from calculator.calculation import calculation
 
 def test_add():
     add = Add(10, 5)
@@ -55,3 +56,18 @@ def test_polymorphism():
     for calculation in operations:
         results.append(calculation.get_result())
     assert results == [15, 7, 24, 6]
+
+def test_divide_by_zero():
+    with pytest.raises(ValueError):
+        Divide(10, 0).get_result()
+        
+def test_abstract_get_result():
+        calculation = CalculationForTests(1, 2)
+        assert calculation.get_result() is None
+
+class CalculationForTests(calculation):
+    def get_result(self):
+        return super().get_result()
+
+    
+    

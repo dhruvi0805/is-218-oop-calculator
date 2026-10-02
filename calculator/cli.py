@@ -1,5 +1,6 @@
 from calculator.calculation import Add, Subtract, Multiply, Divide
 from calculator.history import History
+import math
 
 def run():
     history = History()
@@ -12,7 +13,11 @@ def run():
     }
 
     while True:
-        command = input("Enter command: ").strip().lower()
+        try: 
+            command = input("Enter command: ").strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print("\nExiting the calculator.")
+            break
 
         if command == "exit":
             print("Exiting the calculator.")
@@ -43,18 +48,28 @@ def run():
         if command in operations:
             try: 
                 a = float(input("Enter first number: "))
+        
             except ValueError:
                 print("Invalid number.")
                 continue 
 
+            if not math.isfinite(a):
+                print("Number must be finite.")
+                continue
+
             try: 
                 b = float(input("Enter second number: "))
+
                 operation = operations[command](a, b)
                 result = operation.get_result()
             except ValueError:
                 print("Invalid number or result.")
                 continue
-            
+
+            if not math.isfinite(b):
+                print("Number must be finite.")
+                continue
+
             history.add(operation) 
             print(f"Result: {result:g}")
 
