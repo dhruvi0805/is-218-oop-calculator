@@ -27,23 +27,45 @@ def run():
             continue
 
         if command == "remove":
-            number = int(input("Enter the number of the calculation to remove: "))
-            history.remove(number - 1)  # Convert to zero-based index
+            try:
+                number = int(input("Enter the number of the calculation to remove: "))
+            except ValueError:
+                print("Invalid removal number.")
+            else:
+                try:
+                    removed = history.remove(number -1)
+                except IndexError:
+                    print("Calculation does not exist.")
+                else:
+                    print(f"Removed: {describe(removed)}")
             continue
 
         if command in operations:
-            a = float(input("Enter first number: "))
-            b = float(input("Enter second number: "))
+            try: 
+                a = float(input("Enter first number: "))
+            except ValueError:
+                print("Invalid number.")
+                continue 
 
-            operation = operations[command](a, b)
-            history.add(operation)
-
-            result = operation.get_result()
+            try: 
+                b = float(input("Enter second number: "))
+                operation = operations[command](a, b)
+                result = operation.get_result()
+            except ValueError:
+                print("Invalid number or result.")
+                continue
+            
+            history.add(operation) 
             print(f"Result: {result:g}")
 
 def describe(calculation):
-    return f"{calculation.get_result():g}"
+    return f"{calculation.__class__.__name__}: {calculation.a:g},{calculation.b:g} ={calculation.get_result():g}"
 
 def show_history(history):
+    calculations = history.get_history()
+    if not calculations: 
+        print("No calculations in history.\n")
+        return 
+    
     for number, calculation in enumerate(history.get_history(), start=1):
-        print(f"{number}.{describe(calculation)}")
+        print(f"{number}. {describe(calculation)}")
